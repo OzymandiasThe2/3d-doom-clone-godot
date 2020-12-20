@@ -61,11 +61,16 @@ func _on_SightRange_body_entered(body):
 
 # warning-ignore:unused_argument
 func _on_SightRange_body_exited(body):
-	if state == DEAD:
-		pass
-	else:
+	if body.is_in_group("Player"):
+		print("Player has left aggro range")
 		state = IDLE
 		shoottimer.stop()
+	elif state == DEAD:
+		print("Mob is dead")
+		pass
+	#else:
+	#	state = IDLE
+	#	shoottimer.stop()
 	
 
 func _on_ShootTimer_timeout():
@@ -91,7 +96,7 @@ func _process(delta):
 			dead = true
 			$CollisionShape.disabled = true
 			ap.play("die")
-			continue
+			#continue
 	var cam = get_camera()
 	var test_point:Vector3 = sprite.global_transform.origin
 	if not cam.is_position_behind(test_point):
