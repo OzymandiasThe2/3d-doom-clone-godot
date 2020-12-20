@@ -4,10 +4,6 @@
 [ext_resource path="res://Assets/pistol.png" type="Texture" id=2]
 [ext_resource path="res://Scenes/Player.gd" type="Script" id=3]
 
-
-
-
-
 [sub_resource type="CapsuleShape" id=1]
 
 [sub_resource type="Animation" id=2]
@@ -27,7 +23,9 @@ tracks/0/keys = {
 "values": [ 0, 1, 2, 3, 0 ]
 }
 
-[node name="Player" type="KinematicBody"]
+[node name="Player" type="KinematicBody" groups=[
+"Player",
+]]
 script = ExtResource( 3 )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
@@ -71,3 +69,5 @@ texture = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Position3D" type="Position3D" parent="."]

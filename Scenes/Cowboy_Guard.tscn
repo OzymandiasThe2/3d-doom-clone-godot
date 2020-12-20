@@ -1,6 +1,6 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=8 format=2]
 
-[ext_resource path="res://Scenes/Wizard.gd" type="Script" id=1]
+[ext_resource path="res://Scenes/Cowboy_Guard.gd" type="Script" id=1]
 [ext_resource path="res://Assets/doom_shriji_shoot_sprite.png" type="Texture" id=2]
 
 [sub_resource type="CapsuleShape" id=1]
@@ -28,13 +28,29 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.45 ),
-"transitions": PoolRealArray( 1, 1 ),
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector3( 0, 0, 0 ), Vector3( 45, 0, 0 ) ]
+"values": [ Vector3( 45, 0, 0 ) ]
 }
 
 [sub_resource type="Animation" id=3]
+resource_name = "idle"
+length = 0.125
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite3D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 0 ]
+}
+
+[sub_resource type="Animation" id=4]
 length = 0.6
 loop = true
 step = 0.15
@@ -63,7 +79,12 @@ tracks/1/keys = {
 "values": [ false ]
 }
 
-[node name="Cowboy_Guard" type="KinematicBody"]
+[sub_resource type="SphereShape" id=5]
+radius = 10.0
+
+[node name="Cowboy_Guard" type="KinematicBody" groups=[
+"Mob",
+]]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0 )
 script = ExtResource( 1 )
 
@@ -73,12 +94,35 @@ shape = SubResource( 1 )
 
 [node name="RayCast" type="RayCast" parent="."]
 enabled = true
+cast_to = Vector3( 0, 0, -10 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/die = SubResource( 2 )
-anims/shoot = SubResource( 3 )
+anims/idle = SubResource( 3 )
+anims/shoot = SubResource( 4 )
 
 [node name="Sprite3D" type="Sprite3D" parent="."]
 billboard = 2
 texture = ExtResource( 2 )
 hframes = 4
+
+[node name="StateGUI" type="Label" parent="Sprite3D"]
+margin_right = 40.0
+margin_bottom = 14.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SightRange" type="Area" parent="." groups=[
+"Mob",
+]]
+
+[node name="CollisionShape" type="CollisionShape" parent="SightRange"]
+shape = SubResource( 5 )
+
+[node name="Eyes" type="Spatial" parent="."]
+
+[node name="ShootTimer" type="Timer" parent="."]
+[connection signal="body_entered" from="SightRange" to="." method="_on_SightRange_body_entered"]
+[connection signal="body_exited" from="SightRange" to="." method="_on_SightRange_body_exited"]
+[connection signal="timeout" from="ShootTimer" to="." method="_on_ShootTimer_timeout"]

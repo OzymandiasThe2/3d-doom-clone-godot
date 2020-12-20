@@ -2,14 +2,20 @@ extends KinematicBody
  
 const MOVE_SPEED = 4
 const MOUSE_SENS = 0.5
- 
+
+var damage = 100
+
 onready var anim_player = $AnimationPlayer
 onready var raycast = $RayCast
- 
+onready var bullet = preload("res://Scenes/Bullet.tscn")
+onready var muzzle = $Camera/Muzzle
+
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	yield(get_tree(), "idle_frame")
 	get_tree().call_group("zombies", "set_player", self)
+	get_tree().call_group("Mob", "set_player", self)
+ 
  
 func _input(event):
 	if event is InputEventMouseMotion:
@@ -37,9 +43,17 @@ func _physics_process(delta):
  
 	if Input.is_action_pressed("shoot") and !anim_player.is_playing():
 		anim_player.play("shoot")
-		var coll = raycast.get_collider()
-		if raycast.is_colliding() and coll.has_method("kill"):
-			coll.kill()
+		if raycast.is_colliding():
+			print("bullet is fired")
+			var b = bullet.instance()
+			muzzle.add_child(b)
+			print("bullet is made")
+			b.look_at(raycast.get_collision_point(), Vector3.UP)
+			b.shoot = true
+			
+		#var coll = raycast.get_collider()
+		#if raycast.is_colliding() and coll.has_method("kill"):
+		#	coll.kill()
  
 func kill():
 	get_tree().reload_current_scene()
