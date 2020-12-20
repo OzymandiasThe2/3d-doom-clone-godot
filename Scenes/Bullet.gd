@@ -20,6 +20,7 @@ func _on_Area_body_entered(body):
 	if body.is_in_group("Mob"):
 		body.health -= DAMAGE
 		queue_free()
+		print("Bullet has hurt enemy")
 	else:
 		queue_free()
 		

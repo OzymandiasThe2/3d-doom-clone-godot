@@ -44,10 +44,10 @@ func _physics_process(delta):
 	if Input.is_action_pressed("shoot") and !anim_player.is_playing():
 		anim_player.play("shoot")
 		if raycast.is_colliding():
-			print("bullet is fired")
+			#print("bullet is fired")
 			var b = bullet.instance()
 			muzzle.add_child(b)
-			print("bullet is made")
+			#print("bullet is made")
 			b.look_at(raycast.get_collision_point(), Vector3.UP)
 			b.shoot = true
 			
