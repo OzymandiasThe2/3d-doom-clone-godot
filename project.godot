@@ -19,6 +19,10 @@ config/name="DoomClone"
 run/main_scene="res://Scenes/Level2.tscn"
 config/icon="res://Assets/icon.png"
 
+[editor_plugins]
+
+enabled=PoolStringArray( "sketchfab" )
+
 [input]
 
 move_forwards={

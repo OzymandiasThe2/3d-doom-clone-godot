@@ -3,9 +3,6 @@
 [ext_resource path="res://Scenes/Zombie.gd" type="Script" id=1]
 [ext_resource path="res://Assets/enemy.png" type="Texture" id=2]
 
-
-
-
 [sub_resource type="CapsuleShape" id=1]
 
 [sub_resource type="Animation" id=2]
@@ -62,3 +59,4 @@ billboard = 2
 texture = ExtResource( 2 )
 vframes = 2
 hframes = 5
+frame = 5
