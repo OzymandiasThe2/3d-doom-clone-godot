@@ -1,0 +1,41 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Scenes/PCs/Player.gd" type="Script" id=1]
+[ext_resource path="res://Scenes/Gun/Gun2.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Scenes/Gun/Gun1.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Scenes/Gun/Gun3.tscn" type="PackedScene" id=4]
+
+[sub_resource type="CapsuleShape" id=1]
+
+[node name="Player" type="KinematicBody" groups=[
+"Player",
+]]
+script = ExtResource( 1 )
+
+[node name="Head" type="Spatial" parent="."]
+
+[node name="Hand" type="Spatial" parent="Head"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.80628 )
+
+[node name="Gun1" parent="Head/Hand" instance=ExtResource( 3 )]
+script = null
+
+[node name="Gun2" parent="Head/Hand" instance=ExtResource( 2 )]
+script = null
+
+[node name="Gun3" parent="Head/Hand" instance=ExtResource( 4 )]
+script = null
+
+[node name="Camera" type="Camera" parent="Head"]
+current = true
+
+[node name="Muzzle" type="MeshInstance" parent="Head/Camera"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.58685 )
+
+[node name="RayCast" type="RayCast" parent="Head"]
+enabled = true
+cast_to = Vector3( 0, 0, -2000 )
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 0, 0 )
+shape = SubResource( 1 )

@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://Assets/crosshair.png" type="Texture" id=1]
-[ext_resource path="res://Assets/pistol.png" type="Texture" id=2]
-[ext_resource path="res://Scenes/Player.gd" type="Script" id=3]
+[ext_resource path="res://Scenes/Gun/Gun2.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Scenes/PCs/Player.gd" type="Script" id=3]
+
+
 
 [sub_resource type="CapsuleShape" id=1]
 
@@ -11,7 +12,7 @@ resource_name = "shoot"
 length = 0.6
 step = 0.15
 tracks/0/type = "value"
-tracks/0/path = NodePath("CanvasLayer/Control/Sprite:frame")
+tracks/0/path = NodePath("Gun2/Control/Sprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -42,32 +43,6 @@ current = true
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/shoot = SubResource( 2 )
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
-
-[node name="Control" type="Control" parent="CanvasLayer"]
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Sprite" type="Sprite" parent="CanvasLayer/Control"]
-position = Vector2( 200, -256 )
-texture = ExtResource( 2 )
-hframes = 4
-
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -16.0
-margin_top = -16.0
-texture = ExtResource( 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
+[node name="Gun2" parent="." instance=ExtResource( 1 )]
 
 [node name="Position3D" type="Position3D" parent="."]

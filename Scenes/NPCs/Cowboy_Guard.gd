@@ -6,6 +6,7 @@ onready var sprite = $Sprite3D
 onready var label = $Sprite3D/StateGUI
 
 
+
 func get_camera():
 	var r = get_node('/root')
 	return r.get_viewport().get_camera()
@@ -15,7 +16,6 @@ func position_label(label:Label, point3D:Vector3):
 	var cam_pos = camera.translation
 	var offset = Vector2(label.get_size().x/2, 0)
 	label.rect_position = camera.unproject_position(point3D) - offset
-
 
 
 enum {
@@ -73,10 +73,10 @@ func _on_SightRange_body_exited(body):
 	
 
 func _on_ShootTimer_timeout():
-	if raycast.is_colliding():
+	if raycast.is_colliding() and state != DEAD:
 		var hit = raycast.get_collider()
 		if hit.is_in_group("Player"):
-			print("Hit")
+			print("Play has been hit")
 
 	
 	

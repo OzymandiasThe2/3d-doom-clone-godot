@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://Scenes/Bullet.gd" type="Script" id=1]
+[ext_resource path="res://Scenes/Gun/BulletSlow.gd" type="Script" id=1]
 
 [sub_resource type="CapsuleShape" id=1]
 radius = 0.05
@@ -10,14 +10,14 @@ height = 0.1
 radius = 0.05
 mid_height = 0.1
 
-[sub_resource type="SpatialMaterial" id=3]
-albedo_color = Color( 0.870588, 0.0862745, 0.0862745, 1 )
+[sub_resource type="SpatialMaterial" id=5]
+albedo_color = Color( 0.027451, 0.278431, 0.811765, 1 )
 
 [sub_resource type="CapsuleShape" id=4]
 radius = 0.06
 height = 0.2
 
-[node name="Bullet" type="RigidBody"]
+[node name="BulletSlow" type="RigidBody"]
 collision_layer = 0
 gravity_scale = 0.0
 script = ExtResource( 1 )
@@ -27,11 +27,20 @@ shape = SubResource( 1 )
 
 [node name="MeshInstance" type="MeshInstance" parent="."]
 mesh = SubResource( 2 )
-material/0 = SubResource( 3 )
+material/0 = SubResource( 5 )
 
 [node name="Area" type="Area" parent="."]
 collision_layer = 0
 
 [node name="CollisionShape" type="CollisionShape" parent="Area"]
 shape = SubResource( 4 )
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+
+[node name="Label" type="Label" parent="Sprite3D"]
+margin_right = 40.0
+margin_bottom = 14.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
 [connection signal="body_entered" from="Area" to="." method="_on_Area_body_entered"]
