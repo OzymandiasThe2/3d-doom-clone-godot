@@ -1,5 +1,6 @@
 extends KinematicBody
 
+var health = 200
 
 onready var sprite = $Sprite3D
 onready var label = $Sprite3D/StateGUI
@@ -51,9 +52,7 @@ func _ready():
 	pass # Replace with function body.
 
 func _on_SightRange_body_entered(body):
-	if state == DEAD:
-		pass
-	elif body.is_in_group("Player"):
+	if body.is_in_group("Player") and state != DEAD:
 		state = AGGRO
 		target = body
 		shoottimer.start()
@@ -61,13 +60,13 @@ func _on_SightRange_body_entered(body):
 
 # warning-ignore:unused_argument
 func _on_SightRange_body_exited(body):
-	if body.is_in_group("Player"):
+	if body.is_in_group("Player") and state != DEAD:
 		print("Player has left aggro range")
 		state = IDLE
 		shoottimer.stop()
-	elif state == DEAD:
-		print("Mob is dead")
-		pass
+	#elif state == DEAD:
+	#	print("Mob is dead")
+	#	pass
 	#else:
 	#	state = IDLE
 	#	shoottimer.stop()
@@ -79,11 +78,13 @@ func _on_ShootTimer_timeout():
 		if hit.is_in_group("Player"):
 			print("Hit")
 
-func kill():
-	state = DEAD
+	
 	
 # warning-ignore:unused_argument
 func _process(delta):
+	if health <= 0 and state != DEAD:
+		state = DEAD
+		print(name + " has been killed")
 	var statepostion = int(state)
 	label.text = str(array[statepostion])
 	match state:
@@ -100,8 +101,9 @@ func _process(delta):
 	var cam = get_camera()
 	var test_point:Vector3 = sprite.global_transform.origin
 	if not cam.is_position_behind(test_point):
-		if test_point.distance_to(cam.global_transform.origin) :
+	#	if test_point.distance_to(cam.global_transform.origin) :
 			position_label(label, test_point)
+	
 
 
 

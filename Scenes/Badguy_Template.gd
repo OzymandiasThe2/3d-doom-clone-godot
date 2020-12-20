@@ -10,3 +10,4 @@ func _ready():
 func _process(delta):
 	if health <= 0:
 		queue_free()
+		print(name + " has been killed")
