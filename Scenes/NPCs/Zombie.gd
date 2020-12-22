@@ -1,7 +1,8 @@
 extends KinematicBody
  
 const MOVE_SPEED = 3
- 
+var health = 25
+
 onready var raycast = $RayCast
 onready var anim_player = $AnimationPlayer
  
@@ -11,7 +12,12 @@ var dead = false
 func _ready():
 	anim_player.play("walk")
 	add_to_group("zombies")
- 
+
+func _process(delta):
+	if health <= 0 and dead == false:
+		kill()
+		print(name + " has been killed")
+
 func _physics_process(delta):
 	if dead:
 		return

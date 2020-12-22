@@ -30,7 +30,7 @@ script = null
 current = true
 
 [node name="Muzzle" type="MeshInstance" parent="Head/Camera"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.58685 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.86186 )
 
 [node name="RayCast" type="RayCast" parent="Head"]
 enabled = true

@@ -3,7 +3,6 @@
 [ext_resource path="res://Scenes/NPCs/Zombie.gd" type="Script" id=1]
 [ext_resource path="res://Assets/enemy.png" type="Texture" id=2]
 
-
 [sub_resource type="CapsuleShape" id=1]
 
 [sub_resource type="Animation" id=2]
@@ -58,6 +57,7 @@ anims/die = SubResource( 2 )
 anims/walk = SubResource( 3 )
 
 [node name="Sprite3D" type="Sprite3D" parent="."]
+use_in_baked_light = true
 billboard = 2
 texture = ExtResource( 2 )
 vframes = 2

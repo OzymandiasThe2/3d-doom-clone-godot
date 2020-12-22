@@ -4,7 +4,7 @@ var shoot = false
 
 
 const DAMAGE = 200
-const SPEED = 0.02
+const SPEED = 0.001
 
 onready var sprite = $Sprite3D
 onready var label = $Sprite3D/Label

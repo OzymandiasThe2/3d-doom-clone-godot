@@ -26,6 +26,7 @@ onready var bullet3 = preload("res://Scenes/Gun/BulletBig.tscn")
 
 
 func _ready():
+	
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	yield(get_tree(), "idle_frame")
 	get_tree().call_group("zombies", "set_player", self)
@@ -79,6 +80,7 @@ func _process(delta):
 		kill()
  
 func _physics_process(delta):
+	#print(Performance.get_monitor(Performance.TIME_FPS)) # Prints the FPS to the console
 	weapon_select()
 	
 	
