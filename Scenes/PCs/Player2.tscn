@@ -1,13 +1,13 @@
 [gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://Scenes/PCs/Player.gd" type="Script" id=1]
+[ext_resource path="res://Scenes/PCs/Player2.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/Gun/Gun2.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Scenes/Gun/Gun1.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Scenes/Gun/Gun3.tscn" type="PackedScene" id=4]
 
 [sub_resource type="CapsuleShape" id=1]
 
-[node name="Player" type="KinematicBody" groups=[
+[node name="Player2" type="KinematicBody" groups=[
 "Player",
 ]]
 script = ExtResource( 1 )
@@ -28,6 +28,10 @@ script = null
 
 [node name="Camera" type="Camera" parent="Head"]
 current = true
+
+[node name="Reach" type="RayCast" parent="Head/Camera"]
+enabled = true
+cast_to = Vector3( 0, -1, -5 )
 
 [node name="Muzzle" type="MeshInstance" parent="Head/Camera"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.86186 )

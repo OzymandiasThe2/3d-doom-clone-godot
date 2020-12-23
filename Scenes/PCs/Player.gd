@@ -3,20 +3,25 @@ extends KinematicBody
 const MOVE_SPEED = 4
 const MOUSE_SENS = 0.5
 
-var damage = 100
+var health = 100
 var current_weapon = 1
-
+var weapon_to_spawn
+var weapon_to_drop
 
 onready var raycast = $Head/RayCast
 onready var bullet = preload("res://Scenes/Gun/Bullet.tscn")
 onready var muzzle = $Head/Camera/Muzzle
+onready var reach = $Head/Camera/Reach
+onready var hand = $Head/Hand
 
 onready var gun1 = $Head/Hand/Gun1/Control
+onready var gun1_pickup = preload("res://Scenes/Gun/Revolver.tscn")
 onready var anim_player = $Head/Hand/Gun1/AnimationPlayer
 onready var anim_player_gun1 = $Head/Hand/Gun1/AnimationPlayer
 onready var bullet1 = preload("res://Scenes/Gun/BulletSlow.tscn")
 
 onready var gun2 = $Head/Hand/Gun2/Control
+onready var gun2_pickup = preload("res://Scenes/Gun/Pistol.tscn")
 onready var anim_player_gun2 = $Head/Hand/Gun2/AnimationPlayer
 onready var bullet2 = preload("res://Scenes/Gun/Bullet.tscn")
 
@@ -74,6 +79,35 @@ func weapon_select():
 
 
 func _process(delta):
+	if reach.is_colliding():
+		if reach.get_collider().get_name() == "Revolver":
+			weapon_to_spawn = gun1.instance()
+		elif reach.get_collider().get_name() == "Pistol":
+			weapon_to_spawn = gun2.instance()
+		else:
+			weapon_to_spawn = null
+	else: 
+		weapon_to_spawn = null
+	
+	if hand.get_child(0) != null:
+		if hand.get_child(0).get_name() == "Gun1":
+			weapon_to_drop = gun1_pickup.instance()
+		elif hand.get_child(0).get_name() == "Gun2":
+			weapon_to_drop = gun2_pickup.instance()
+	else:
+		weapon_to_drop = null
+		
+	if Input.is_action_just_pressed("Interact"):
+		if weapon_to_spawn != null:
+			if hand.get_child(0) != null:
+				get_parent().add_child(weapon_to_drop)
+				weapon_to_drop.global_transform = hand.global_transform
+				weapon_to_drop.dropped = true
+				hand.get_child(0).queue_free()
+			reach.get_collider().queue_free()
+			hand.add_child(weapon_to_spawn)
+			weapon_to_spawn.rotation = hand.rotation
+				
 	if Input.is_action_pressed("exit"):
 		get_tree().quit()
 	if Input.is_action_pressed("restart"):
